@@ -6,6 +6,9 @@ export PATH=$HOME/.local/bin:/opt/homebrew/bin:$PATH
 export DOCKER_CONTEXT=${DOCKER_CONTEXT:-colima-judge}
 cd ~/Project/portfolio-hub
 export HUB_DATA_DIR=${HUB_DATA_DIR:-/Volumes/TradingData/portfolio-hub}
+# 최상위 폴더는 처음 한 번 사람이 만든다(외장 SSD 루트는 root 소유):
+#   sudo mkdir -p /Volumes/TradingData/portfolio-hub && sudo chown $USER:staff /Volumes/TradingData/portfolio-hub
+[ -w "$HUB_DATA_DIR" ] || { echo "$HUB_DATA_DIR 에 쓸 수 없다 — 위 주석대로 폴더를 만든다" >&2; exit 1; }
 mkdir -p "$HUB_DATA_DIR"/{site,tunnel}
 
 rsync -a --delete site/ "$HUB_DATA_DIR/site/"
