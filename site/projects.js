@@ -53,7 +53,7 @@ window.PROJECTS = [
     stack: ["Java 21", "Spring Boot", "PostgreSQL", "Nginx", "Prometheus", "Grafana"],
     url: "https://threads.cafitac.com",
     repo: null,
-    shot: "shots/threads.jpg",
+    shot: "shots/threads.jpg?v=2",
     note: null,
   },
   {
