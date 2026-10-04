@@ -57,23 +57,6 @@ window.PROJECTS = [
     note: null,
   },
   {
-    id: "puri",
-    name: "puri",
-    tagline: "펜으로 풀고 풀이 과정을 AI 와 함께 검토하는 수학 풀이 워크스페이스",
-    summary:
-      "답만 입력하는 문제 풀이가 아니라, 압력 필기 캔버스에 남긴 풀이 과정 전체를 AI 가 판독 · 채점하고 다음 학습 단계를 제안한다.",
-    highlights: [
-      "Pointer Events 기반 압력 필기 · 700ms 자동 저장 · 제출 후 읽기 전용 보관",
-      "버전이 고정된 문제 카탈로그 — 문제집이 개정돼도 이미 제출한 풀이의 채점 기준은 그대로",
-      "Gemini · OpenAI 호환 provider 를 골라 쓰는 풀이 판독 · LaTeX 변환",
-    ],
-    stack: ["Next.js 16", "React 19", "TypeScript", "PostgreSQL", "Canvas API"],
-    url: "https://puri-dev.cafitac.com",
-    repo: null,
-    shot: "shots/puri.jpg",
-    note: null,
-  },
-  {
     id: "preview-hub",
     name: "preview-hub",
     tagline: "브랜치 · PR 단위로 여러 저장소를 묶어 띄우는 프리뷰 환경",
