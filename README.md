@@ -13,7 +13,7 @@ site/
 deploy/
   deploy.sh      로컬에서 실행 — 동기화 후 remote.sh
   remote.sh      맥스튜디오 — 외장 SSD 로 복사, 터널 없으면 생성 · DNS 연결, compose up
-  compose.yml    nginx(127.0.0.1:8795) + cloudflared
+  compose.yml    nginx(127.0.0.1:8796) + cloudflared
 ```
 
 ## 로컬 미리보기

@@ -11,7 +11,7 @@ services:
       - ${HUB_DATA_DIR}/site:/usr/share/nginx/html:ro
       - ${HUB_DATA_DIR}/nginx.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
-      - "127.0.0.1:8795:80"
+      - "127.0.0.1:8796:80"
     restart: unless-stopped
     logging: *logging
 

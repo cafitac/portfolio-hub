@@ -26,7 +26,7 @@ sed "s/TUNNEL_ID/$TID/g" deploy/cloudflared.yml > "$HUB_DATA_DIR/tunnel/config.y
 
 docker compose -p portfolio-hub -f deploy/compose.yml up -d
 for _ in $(seq 1 20); do
-  curl -fsS -o /dev/null http://127.0.0.1:8795/ && { echo "portfolio-hub: 로컬 응답 확인"; exit 0; }
+  curl -fsS -o /dev/null http://127.0.0.1:8796/ && { echo "portfolio-hub: 로컬 응답 확인"; exit 0; }
   sleep 1
 done
 echo "portfolio-hub: 로컬 응답 없음" >&2; exit 1
