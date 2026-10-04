@@ -1,0 +1,8 @@
+# 포트폴리오 허브 전용 터널 — 다른 프로젝트 터널과 설정 · 자격 증명을 나눈다. TUNNEL_ID 는 remote.sh 가 채운다.
+tunnel: TUNNEL_ID
+credentials-file: /etc/cloudflared/TUNNEL_ID.json
+
+ingress:
+  - hostname: portfolio.cafitac.com
+    service: http://web:80
+  - service: http_status:404

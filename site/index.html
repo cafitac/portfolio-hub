@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>cafitac · 프로젝트</title>
+  <meta name="description" content="백엔드 엔지니어 cafitac 이 직접 만들고 운영 중인 프로젝트 모음" />
+  <meta property="og:title" content="cafitac · 프로젝트" />
+  <meta property="og:description" content="직접 만들고 운영 중인 프로젝트 모음" />
+  <meta property="og:image" content="https://portfolio.cafitac.com/shots/interview.jpg" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%233b5bdb'/><text x='16' y='22' font-size='16' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>c</text></svg>" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="wrap top-row">
+      <a class="brand" href="/">cafitac</a>
+      <nav>
+        <a href="#projects">프로젝트</a>
+        <a href="https://github.com/cafitac" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <p class="eyebrow">Backend Engineer</p>
+      <h1>직접 만들고,<br />직접 운영하는 프로젝트들</h1>
+      <p class="lead">
+        아래 서비스는 모두 집에 있는 Mac Studio 한 대에서 도커와 Cloudflare Tunnel 로 돌고 있어요.
+        카드를 눌러 실제 사이트로 넘어가 볼 수 있어요.
+      </p>
+      <ul class="index" id="index"></ul>
+    </section>
+
+    <section id="projects" class="projects"></section>
+  </main>
+
+  <footer class="wrap foot">
+    <span>© cafitac</span>
+    <a href="https://github.com/cafitac" target="_blank" rel="noopener">github.com/cafitac</a>
+  </footer>
+
+  <script src="projects.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
