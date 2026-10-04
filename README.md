@@ -22,11 +22,17 @@ deploy/
 python3 -m http.server 4180 -d site
 ```
 
-## 배포
+## 배포 (homelab k8s)
+
+2026-10-05 부터 [cafitac/homelab](https://github.com/cafitac/homelab) 의 k8s 클러스터에서 돈다(`apps/portfolio`).
 
 ```bash
-deploy/deploy.sh
+git commit ...                 # 태그가 커밋을 가리킨다 — 커밋하지 않은 변경이 있으면 멈춘다
+deploy/k8s-image.sh            # 맥스튜디오 k8s VM 에서 portfolio-hub:<커밋> 이미지를 만든다
+# homelab/apps/portfolio/kustomization.yaml 의 newTag 를 바꾸고 kubectl apply -k apps/portfolio
 ```
+
+이전 방식(`deploy/deploy.sh` — colima-judge 의 nginx + 전용 터널)은 옮긴 뒤 검증 기간 동안만 남겨 둔다. 롤백: `cloudflared tunnel route dns --overwrite-dns portfolio-hub portfolio.cafitac.com`.
 
 처음 배포할 때 `portfolio-hub` 터널을 만들고 `portfolio.cafitac.com` CNAME 을 그 터널로 잇는다.
 `*.cafitac.com` 와일드카드(preview-hub 터널)보다 지정 레코드가 먼저 적용된다.
