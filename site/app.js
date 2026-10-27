@@ -11,6 +11,7 @@
   const STATUS = { fail: ["✕", "실패"], pass: ["✓", "통과"], info: ["→", "진행"] };
 
   const visual = (p) => {
+    if (!p.shot && !(p.record || []).length) return "";
     if (p.shot) {
       const img = `<img src="${esc(p.shot)}" alt="${esc(p.shotAlt || p.name + " 화면")}" loading="lazy" width="1280" height="800" />`;
       return p.url
@@ -66,7 +67,7 @@
 
   document.getElementById("projects").innerHTML = window.PROJECTS.map(
     (p) => `
-    <article class="card" id="${esc(p.id)}">
+    <article class="card${p.shot || (p.record || []).length ? "" : " text-only"}" id="${esc(p.id)}">
       ${visual(p)}
       <div class="body">
         <h2>${esc(p.name)}</h2>

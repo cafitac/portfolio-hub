@@ -224,7 +224,8 @@ a.shot:hover img { transform: scale(1.01); }
 }
 
 /* 첫 화면 대표 숫자 — 누르면 해당 카드로 */
-.hero-kpis { margin-top: var(--space-8); }
+.hero-kpis { margin-top: var(--space-8); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.card.text-only { grid-template-columns: minmax(0, 1fr); }
 .hero-kpis li { padding: 0; }
 .hero-kpis a { display: block; height: 100%; padding: var(--space-4) var(--space-5); border-radius: var(--radius-md); text-decoration: none; border: 1px solid transparent; }
 .hero-kpis a:hover { border-color: var(--color-accent-500); }
