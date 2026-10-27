@@ -1,14 +1,15 @@
 # portfolio-hub
 
 `portfolio.cafitac.com` — 직접 만들고 운영 중인 프로젝트를 한 화면에서 보고 각 사이트로 넘어가는 허브.
-빌드 단계 없는 정적 사이트(nginx)이고, 다른 프로젝트처럼 맥스튜디오에서 전용 Cloudflare 터널로 나간다.
+빌드 단계 없는 정적 사이트(nginx)이고, homelab k8s 에서 돈다(아래 배포).
 
 ```
 site/
   index.html     레이아웃
   projects.js    프로젝트 목록 — 카드를 더하거나 고칠 때는 이 파일만 바꾼다
   app.js         목록으로 목차 · 카드를 그린다
-  styles.css     라이트 · 다크, 820px 아래는 한 줄 카드
+  tokens.css     cafitac 디자인 시스템 토큰 — agent-skills 의 config/design-profiles/cafitac/tokens.css 사본, 값은 거기서 고친다
+  styles.css     역할 토큰만 쓴다. 라이트 · 다크, 820px 아래는 한 줄 카드
   shots/         각 사이트 화면 캡처(1280×800, JPEG)
 deploy/
   deploy.sh      로컬에서 실행 — 동기화 후 remote.sh
@@ -41,4 +42,5 @@ deploy/k8s-image.sh            # 맥스튜디오 k8s VM 에서 portfolio-hub:<�
 
 1. `site/projects.js` 에 항목을 더한다(필드 설명은 파일 머리 주석).
 2. 화면 캡처가 있으면 `site/shots/<id>.jpg` 로 넣는다(1280×800 권장).
-3. `deploy/deploy.sh`.
+3. 수치는 근거(결정 기록 · 실험 · 커밋)가 있는 측정값만 쓰고 `result.source` 에 위치를 적는다.
+4. 위 "배포 (homelab k8s)" 순서대로 올린다.

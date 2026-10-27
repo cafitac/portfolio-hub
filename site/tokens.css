@@ -1,0 +1,95 @@
+/* cafitac design tokens — see DESIGN.md in this folder.
+   Role names only; components must not use raw hex or off-scale spacing.
+   Neutral ramp: cool grey structure (10 steps), our own values. Accent: one blue. */
+:root {
+  /* surfaces */
+  --color-bg-canvas: #f4f6f8;
+  --color-bg-surface: #ffffff;
+  --color-bg-subtle: #eff2f5;
+  --color-bg-hover: #e6eaee;
+  /* lines */
+  --color-border-subtle: #e3e7eb;
+  --color-border-default: #cfd5db;
+  --color-border-strong: #78828d;
+  /* text */
+  --color-text-primary: #161b22;
+  --color-text-secondary: #4c5664;
+  --color-text-tertiary: #5d6875;
+  --color-text-disabled: #adb5be;
+  /* accent: CTA, focus, selection, primary chart line only */
+  --color-accent-500: #2a66d2;
+  --color-accent-600: #2253ad;
+  --color-accent-50: #eaf1fd;
+  --color-on-accent: #ffffff;
+  /* semantic */
+  --color-success-600: #1d7a4e;
+  --color-success-50: #e6f5ed;
+  --color-danger-600: #c2362d;
+  --color-danger-50: #fdebe9;
+  --color-warning-600: #875800;
+  --color-warning-50: #fcf2da;
+  --color-focus: #2a66d2;
+  /* data */
+  --color-chart-line: #2a66d2;
+  --color-chart-reference: #78828d;
+  --color-chart-grid: #e3e7eb;
+  --color-no-data: #8a949f;
+
+  /* type */
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --text-display: 700 28px/36px var(--font-sans);
+  --text-title: 700 20px/28px var(--font-sans);
+  --text-subtitle: 600 17px/24px var(--font-sans);
+  --text-body: 400 15px/24px var(--font-sans);
+  --text-body-strong: 600 15px/24px var(--font-sans);
+  --text-table: 400 14px/20px var(--font-sans);
+  --text-label: 600 13px/18px var(--font-sans);
+  --text-caption: 500 12px/16px var(--font-sans);
+  --text-numeric-xl: 700 32px/40px var(--font-sans);
+  --text-numeric-lg: 700 24px/32px var(--font-sans);
+  --text-mono: 400 13px/20px var(--font-mono);
+  --tracking-display: -0.02em;
+  --tracking-title: -0.01em;
+
+  /* space (4px base) */
+  --space-0-5: 2px; --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px; --space-12: 48px; --space-16: 64px;
+
+  /* shape */
+  --radius-xs: 4px; --radius-sm: 6px; --radius-md: 8px; --radius-lg: 12px; --radius-full: 9999px;
+
+  /* size */
+  --control-sm: 32px; --control-md: 40px; --row-table: 44px; --row-table-dense: 36px;
+  --content-max: 1200px;
+
+  /* depth */
+  --shadow-panel: 0 1px 2px rgba(16, 24, 40, 0.04), 0 4px 12px rgba(16, 24, 40, 0.04);
+  --focus-ring: 0 0 0 2px var(--color-bg-surface), 0 0 0 4px var(--color-focus);
+
+  /* motion */
+  --duration-fast: 100ms; --duration-base: 180ms; --ease-out: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg-canvas: #0f1216; --color-bg-surface: #171b21; --color-bg-subtle: #1f242c; --color-bg-hover: #272d36;
+    --color-border-subtle: #2a3038; --color-border-default: #373e48; --color-border-strong: #778190;
+    --color-text-primary: #edf0f3; --color-text-secondary: #b0b9c4; --color-text-tertiary: #8d97a4; --color-text-disabled: #5b6470;
+    --color-accent-500: #7eaaff; --color-accent-600: #a3c1ff; --color-accent-50: #1b2a47; --color-on-accent: #0f1216;
+    --color-success-600: #6cd29f; --color-success-50: #15302a; --color-danger-600: #ff8e83; --color-danger-50: #3a1c1a;
+    --color-warning-600: #e6ba5c; --color-warning-50: #32281a; --color-focus: #7eaaff;
+    --color-chart-line: #7eaaff; --color-chart-reference: #778190; --color-chart-grid: #2a3038; --color-no-data: #6e7884;
+    --shadow-panel: none;
+  }
+}
+:root[data-theme="dark"] {
+  --color-bg-canvas: #0f1216; --color-bg-surface: #171b21; --color-bg-subtle: #1f242c; --color-bg-hover: #272d36;
+  --color-border-subtle: #2a3038; --color-border-default: #373e48; --color-border-strong: #778190;
+  --color-text-primary: #edf0f3; --color-text-secondary: #b0b9c4; --color-text-tertiary: #8d97a4; --color-text-disabled: #5b6470;
+  --color-accent-500: #7eaaff; --color-accent-600: #a3c1ff; --color-accent-50: #1b2a47; --color-on-accent: #0f1216;
+  --color-success-600: #6cd29f; --color-success-50: #15302a; --color-danger-600: #ff8e83; --color-danger-50: #3a1c1a;
+  --color-warning-600: #e6ba5c; --color-warning-50: #32281a; --color-focus: #7eaaff;
+  --color-chart-line: #7eaaff; --color-chart-reference: #778190; --color-chart-grid: #2a3038; --color-no-data: #6e7884;
+  --shadow-panel: none;
+}
