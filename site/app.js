@@ -13,7 +13,7 @@
   const visual = (p) => {
     if (!p.shot && !(p.record || []).length) return "";
     if (p.shot) {
-      const img = `<img src="${esc(p.shot)}" alt="${esc(p.shotAlt || p.name + " 화면")}" loading="lazy" width="1280" height="800" />`;
+      const img = `<img src="${esc(p.shot)}" alt="${esc(p.shotAlt || p.name + " 화면")}" loading="lazy" width="1280" height="800"${p.shotPos ? ` style="object-position:${esc(p.shotPos)}"` : ""} />`;
       return p.url
         ? `<a class="shot" href="${esc(p.url)}" target="_blank" rel="noopener" aria-label="${esc(p.name)} 사이트 열기">${img}</a>`
         : `<div class="shot">${img}</div>`;
@@ -47,7 +47,7 @@
 
   const flow = (steps) =>
     steps && steps.length
-      ? `<ol class="flow" aria-label="동작 흐름">${steps.map((s) => `<li>${esc(s)}</li>`).join("")}</ol>`
+      ? `<p class="flow">${steps.map(esc).join(' <span aria-hidden="true">→</span> ')}</p>`
       : "";
 
   const links = (p) =>

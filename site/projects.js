@@ -5,6 +5,7 @@
 //   url     공개 사이트(없으면 null — 저장소 링크만 보인다)
 //   repos   공개 저장소 목록(비공개면 빈 배열)
 //   shot    shots/ 아래 화면 캡처. 없으면 record(실제 실행 기록)를 그리고, 둘 다 없으면 그림 칸 없이 글만
+//   shotPos 캡처가 칸보다 좁게 보일 때 맞출 기준(기본 왼쪽 위)
 //   detail  기술 노트 같은 상세 페이지(있으면 버튼으로)
 //   note    방문자가 알아야 할 한 줄(로그인 필요, 수치의 성격 등)
 window.PROJECTS = [
@@ -31,9 +32,9 @@ window.PROJECTS = [
     url: "https://interview.cafitac.com",
     detail: { href: "interview-coach.html", label: "기술 자세히 보기" },
     repos: [],
-    shot: "shots/interview.jpg?v=2",
-    shotAlt: "과제 리뷰 면접 화면 — 질문, 깊이 2/5, 좋았던 점 · 보완할 점 · 이렇게 말하면 돼요",
-    note: "초대 코드가 있어야 가입할 수 있어요. 화면은 과제 리뷰 면접의 피드백이에요",
+    shot: "shots/interview.jpg?v=3",
+    shotAlt: "성장 화면 — 축별 처음 · 지금, 주제별 도달 깊이 추이",
+    note: "초대 코드가 있어야 가입할 수 있어요",
   },
   {
     id: "gather",
@@ -60,6 +61,7 @@ window.PROJECTS = [
     url: "https://gather.cafitac.com",
     repos: [],
     shot: "shots/gather.jpg",
+    shotPos: "top center",
     shotAlt: "채점판 문제 화면 — 30분 안에 8만 건, 공급자는 초당 50건",
     note: null,
   },
