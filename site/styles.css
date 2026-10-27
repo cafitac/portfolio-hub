@@ -222,3 +222,18 @@ a.shot:hover img { transform: scale(1.01); }
   .pswn dd { margin-bottom: var(--space-3); }
   .arch-row { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* 첫 화면 대표 숫자 — 누르면 해당 카드로 */
+.hero-kpis { margin-top: var(--space-8); }
+.hero-kpis li { padding: 0; }
+.hero-kpis a { display: block; height: 100%; padding: var(--space-4) var(--space-5); border-radius: var(--radius-md); text-decoration: none; border: 1px solid transparent; }
+.hero-kpis a:hover { border-color: var(--color-accent-500); }
+.hero-kpis a:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+.hero-kpis .after { font: var(--text-numeric-lg); font-size: 26px; color: var(--color-accent-600); }
+.hero-kpis .before, .hero-kpis .to { font: var(--text-subtitle); font-size: 18px; }
+.hero .index { margin-top: var(--space-5); }
+.caveat { margin: var(--space-3) 0 0; font: var(--text-table); color: var(--color-warning-600); }
+.points.more { font-size: 15px; }
+@media (max-width: 640px) { .hero-kpis { grid-template-columns: minmax(0, 1fr); } }
+.kpis .after:not(.small) { font: var(--text-numeric-lg); font-size: 26px; color: var(--color-accent-600); }
+.kpis .before, .kpis .to { font: var(--text-subtitle); font-size: 18px; }
