@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Interview Coach · 기술 노트</title>
+  <meta name="description" content="AI 모의 면접 Interview Coach 를 만들며 푼 기술 문제 — 음성 말끝 판단, 면접관 하네스, 비동기 작업과 실시간 통로, 검색, 장애 대응" />
+  <meta property="og:title" content="Interview Coach · 기술 노트" />
+  <meta property="og:description" content="문제 → 왜 어려웠나 → 어떻게 풀었나 → 숫자" />
+  <meta property="og:image" content="https://portfolio.cafitac.com/shots/interview.jpg" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%232a66d2'/><text x='16' y='22' font-size='16' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>c</text></svg>" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="wrap top-row">
+      <a class="brand" href="/">cafitac</a>
+      <nav>
+        <a href="/#interview">프로젝트</a>
+        <a href="https://github.com/cafitac" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap doc">
+    <p class="back"><a href="/#interview">← 프로젝트 목록</a></p>
+    <p class="eyebrow">Interview Coach · 기술 노트</p>
+    <h1>AI 모의 면접을 만들며 푼 문제들</h1>
+    <p class="lead">
+      지원한 회사의 공고와 내 이력서를 근거로 면접관이 음성으로 묻고, 답마다 좋았던 점 · 보완할 점 · 다음 답 예시를 돌려주는 서비스예요.
+      혼자 만들고 홈랩 쿠버네티스에서 운영하고 있어요. 각 항목은 <b>문제 → 왜 어려웠나 → 어떻게 풀었나 → 숫자</b> 순서이고, 숫자는 저장소의 설계 문서 · 실험 기록에 있는 값만 옮겼어요.
+    </p>
+
+    <ul class="kpis" aria-label="대표 결과">
+      <li>
+        <p class="result-label">음성 답이 중간에 잘리는 비율</p>
+        <p class="delta"><span class="before">69.7%</span><span class="to" aria-hidden="true">→</span><span class="sr">에서</span><span class="after">3.7%</span></p>
+        <p class="result-source">합성 평가 세트 · 설명형 답</p>
+      </li>
+      <li>
+        <p class="result-label">질문 근거 검색 정확도(MRR)</p>
+        <p class="delta"><span class="before">0.81</span><span class="to" aria-hidden="true">→</span><span class="sr">에서</span><span class="after">0.88</span></p>
+        <p class="result-source">평가 세트 · 질의 확장 실험</p>
+      </li>
+      <li>
+        <p class="result-label">서버 멈춤 장애의 원인</p>
+        <p class="delta"><span class="after small">가상 스레드 pinning</span></p>
+        <p class="result-source">스레드 덤프로 특정 · JDK 25 로 해결</p>
+      </li>
+    </ul>
+
+    <section class="sec" aria-labelledby="arch">
+      <h2 id="arch">구성</h2>
+      <div class="arch" role="img" aria-label="iOS 앱과 브라우저가 웹을 거쳐 서버로, 서버는 작업 실행기 · 실시간 통로 · LLM 을 쓰고, 검색 서비스와 임베딩 서비스를 내부 토큰으로만 부른다. 저장소는 PostgreSQL 과 pgvector.">
+        <div class="arch-row">
+          <div class="node"><b>iOS 앱</b><span>웹 화면 + 네이티브 음성 · Apple Pencil</span></div>
+          <div class="node"><b>브라우저</b><span>음성 · 손그림 사진</span></div>
+        </div>
+        <div class="arch-arrow" aria-hidden="true">↓</div>
+        <div class="arch-row"><div class="node wide"><b>web</b><span>Next.js · /api 를 서버로 그대로 전달</span></div></div>
+        <div class="arch-arrow" aria-hidden="true">↓</div>
+        <div class="arch-row">
+          <div class="node wide main"><b>server</b><span>Kotlin · Spring Boot · 면접관 하네스 · 마이그레이션 84개</span>
+            <div class="sub">
+              <span>비동기 작업 실행기</span><span>실시간 통로(SSE 하나)</span><span>LLM 호출(Claude)</span>
+            </div>
+          </div>
+        </div>
+        <div class="arch-arrow" aria-hidden="true">↓ 내부 토큰으로만</div>
+        <div class="arch-row">
+          <div class="node"><b>knowledge</b><span>자료 쪼개기 · 하이브리드 검색(pgvector + 키워드)</span></div>
+          <div class="node"><b>embedder</b><span>로컬 임베딩 모델(Qwen3-Embedding) · 상태 없음</span></div>
+        </div>
+        <p class="arch-foot">저장소: PostgreSQL + pgvector · 배포: 홈랩 k8s(Argo CD) · 감시: 멈춤 감시 장치 · 음성 지표</p>
+      </div>
+    </section>
+
+    <section class="sec" aria-labelledby="voice">
+      <h2 id="voice">1. 음성 — 말이 끝났는지 판단하기</h2>
+      <dl class="pswn">
+        <dt>문제</dt>
+        <dd>생각하느라 잠깐 멈춘 것을 답이 끝난 것으로 보면, 답이 중간에 잘린 채 채점돼요. 반대로 오래 기다리면 대화가 굼떠요.</dd>
+        <dt>왜 어려웠나</dt>
+        <dd>iOS Safari 는 음성 인식기가 마이크를 쥐고 있어 소리 크기나 별도 음성 모델을 쓸 수 없고, 받아쓴 글자만 남아요. 한국어는 「~습니다」로 문장이 끝나도 말이 이어지는 일이 많아요.</dd>
+        <dt>어떻게 풀었나</dt>
+        <dd>
+          <ul>
+            <li>규칙은 <b>언제 물어볼지</b>만 정하고, 말이 정말 끝났는지는 LLM 응답의 <code>keep_listening</code> 이 최종 판정해요. 규칙 = 거름망, 모델 = 판정으로 나눴어요.</li>
+            <li>문장 끝 뒤 대기 시간을 훑어(2.6초 15.7% · 3.0초 9.0% · 3.4초 3.7% · 3.8초 0%) 잘림 목표 5% 아래에서 가장 짧은 3.4초를 골랐어요.</li>
+            <li>공개 오디오 말끝 모델(SmartTurn 류)은 그림자 모드로 붙여 비교하고, 동의한 목소리만 모아 한국어 모델을 학습할 준비를 해 두었어요.</li>
+          </ul>
+        </dd>
+        <dt>숫자</dt>
+        <dd>설명형 답 잘림 <b>69.7% → 3.7%</b>, 실제 사건 재현 1/2 → 0/2. 대신 설명형 답의 대기는 1.60초 → 3.75초로 늘었고, 대화 모드는 2.85초 → 1.60초로 줄었어요.</dd>
+      </dl>
+    </section>
+
+    <section class="sec" aria-labelledby="ios">
+      <h2 id="ios">2. iOS — 음성만 네이티브로 다시 짜기</h2>
+      <p class="sec-lead">화면은 웹을 그대로 쓰고, 웹에서 풀 수 없던 음성만 앱이 맡아요.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th scope="col">웹(Safari)에서의 문제</th><th scope="col">앱에서</th></tr></thead>
+          <tbody>
+            <tr><td>짧은 침묵에 인식 세션이 끊기고 다시 켜는 틈에 말을 잃어요</td><td>네이티브 세션은 화면이 멈출 때까지 끊지 않아요</td></tr>
+            <tr><td>한국어 고정이라 TCP · UDP 같은 영어 CS 용어가 한글로 깨져요</td><td>iOS 26 SpeechAnalyzer 에 CS 용어 · 지금 질문을 힌트로 줘요</td></tr>
+            <tr><td>코치가 말하는 동안 마이크가 꺼져 끼어들 수 없어요</td><td>마이크와 코치 목소리를 한 오디오 엔진에 올려 에코를 지우고, 읽는 중에도 듣다가 끼어들 수 있어요</td></tr>
+            <tr><td>소리 크기를 몰라 생각 중 멈춤과 말끝을 구분 못 해요</td><td>에코를 지운 마이크 소리 크기를 웹의 말끝 판단에 넘겨요</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="sec-note">시스템 설계 면접용 Apple Pencil 캔버스(PencilKit)도 같은 방식으로 붙였어요 — 손그림을 올리면 빠진 부분을 정답 대신 질문으로 되물어요.</p>
+    </section>
+
+    <section class="sec" aria-labelledby="harness">
+      <h2 id="harness">3. 면접관 하네스 — 모델은 제안, 코드가 결정</h2>
+      <dl class="pswn">
+        <dt>문제</dt>
+        <dd>모델에게 면접 진행을 통째로 맡기면 같은 걸 계속 파거나, 너무 빨리 넘어가거나, 끝낼 때를 놓쳐요.</dd>
+        <dt>어떻게 풀었나</dt>
+        <dd>
+          <ul>
+            <li>턴마다 모델은 판정과 다음 발화를 한 번의 호출로 <b>제안</b>만 해요. 더 파기 · 화제 틀기 · 다음 질문은 코드의 라우터가 정하고, 꼬리 질문은 최대 4번이에요.</li>
+            <li>꼬리 질문 깊이는 사실 → 이유 → 대안 → 한계 → 원리 순서를 코드가 강제해요.</li>
+            <li>화면 6개에 흩어진 꼬리 질문 예산 · 답 나누기 · 판정 기준을 공통 엔진(고르기 → 나누기 → 채점 → 꼬리 → 증거) 하나로 모으고 있어요. 패키지 경계는 테스트로 막아 거꾸로 의존하지 못하게 했어요.</li>
+          </ul>
+        </dd>
+      </dl>
+    </section>
+
+    <section class="sec" aria-labelledby="jobs">
+      <h2 id="jobs">4. 비동기 작업과 실시간 통로 — 오래 걸리는 답을 잃지 않기</h2>
+      <dl class="pswn">
+        <dt>문제</dt>
+        <dd>채점처럼 오래 걸리는 모델 호출이 웹 프록시(90초) · Cloudflare(100초)보다 길어지면, 서버는 끝까지 돌아 저장했는데 화면은 "요청에 실패했습니다"를 봤어요. 실제로 90.9초 걸린 요청에서 그랬어요.</dd>
+        <dt>어떻게 풀었나</dt>
+        <dd>
+          <ul>
+            <li>답 보내기를 <b>202 접수 + 공통 작업 실행기</b>로 바꾸고, 결과는 탭마다 <b>SSE 연결 하나</b>로 밀어 줘요. 연결이 안 되면 같은 모양의 폴링으로 돌아가요.</li>
+            <li>같은 답을 다시 보내도 두 번 채점하지 않게 요청 키에 유니크 인덱스를, 같은 대상이 동시에 두 번 돌지 않게 <code>status = 'running'</code> 부분 유니크 인덱스를 걸었어요.</li>
+            <li>도는 서버가 10초마다 하트비트를 남기고, 60초 넘게 소식이 없으면 서버가 내려간 것으로 보고 "다시 보내기"로 닫아요. 작업 하나의 모델 호출 예산은 180초예요.</li>
+            <li>과제 리뷰 · CS 면접 · 학습 대화 · 시스템 설계가 같은 모듈을 써요.</li>
+          </ul>
+        </dd>
+      </dl>
+    </section>
+
+    <section class="sec" aria-labelledby="search">
+      <h2 id="search">5. 검색 — 숫자가 좋아도 바로 켜지 않기</h2>
+      <dl class="pswn">
+        <dt>구성</dt>
+        <dd>질문의 근거(공고 · 기술 블로그 · 이력서)를 찾는 검색은 별도 서비스(knowledge)이고, 벡터 계산은 상태 없는 임베딩 서비스(로컬 Qwen3-Embedding)가 맡아요. 서버만 내부 토큰으로 부를 수 있어요.</dd>
+        <dt>실험</dt>
+        <dd>질의를 여러 갈래로 늘리는 확장을 켜면 MRR <b>0.810 → 0.833 · 0.883</b>, 상위 3개 안에 정답 84.6% → 92.3% 로 나아졌어요. 하지만 늘린 질의가 실행마다 달라 결과가 흔들려서 기본값은 끄고, 평가 실행에서만 골라 써요.</dd>
+        <dt>그 밖에</dt>
+        <dd>검색 결과 중복 제거로 MRR 0.927 → 0.939.</dd>
+      </dl>
+    </section>
+
+    <section class="sec" aria-labelledby="ops">
+      <h2 id="ops">6. 운영 — 멈춤 장애를 끝까지 추적하기</h2>
+      <dl class="pswn">
+        <dt>증상</dt>
+        <dd>배포 직후 CPU 는 0% 인데 서버가 아무 요청에도 답하지 않는 멈춤이 반복됐어요.</dd>
+        <dt>추적</dt>
+        <dd>연속 실패가 쌓이면 스레드 덤프를 한 번 남기는 감시 장치를 먼저 붙였고, 재발했을 때 덤프로 원인을 찾았어요 — JDK 21 가상 스레드가 Jackson · kotlin-reflect 의 <code>synchronized</code> 잠금을 쥔 채 캐리어 2개를 모두 붙잡아(pinning), 잠금을 넘겨받을 스레드가 올라탈 자리가 없었어요.</dd>
+        <dt>해결</dt>
+        <dd>런타임을 JDK 25(JEP 491 — <code>synchronized</code> 안에서도 캐리어를 내려놓음)로 올리고 캐리어를 8개로 늘렸어요. 감시 장치와 liveness 검사는 그대로 두었어요.</dd>
+        <dt>격리</dt>
+        <dd>계정 격리 QA 체크리스트로 작업 · 실시간 통로 · 진행 안내에서 남의 데이터가 보이는지 확인하고, 남의 연습 id 에 "지금 채점 중"이 드러나던 문제를 고쳤어요.</dd>
+      </dl>
+    </section>
+
+    <section class="sec" aria-labelledby="scale">
+      <h2 id="scale">규모</h2>
+      <ul class="figures scale">
+        <li><b>84</b><span>DB 마이그레이션</span></li>
+        <li><b>279</b><span>서버 테스트 파일</span></li>
+        <li><b>98</b><span>웹 테스트 파일</span></li>
+      </ul>
+      <p class="sec-note">Kotlin · Spring Boot · PostgreSQL + pgvector · Python(FastAPI) · Next.js · Swift(iOS) · Claude</p>
+    </section>
+
+    <div class="actions doc-actions">
+      <a class="btn primary" href="https://interview.cafitac.com" target="_blank" rel="noopener">interview.cafitac.com <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M5 3h8v8M13 3 3 13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="btn" href="/#interview">프로젝트 목록으로</a>
+    </div>
+    <p class="note">초대 코드가 있어야 가입할 수 있어요. 저장소는 비공개예요.</p>
+  </main>
+
+  <footer class="wrap foot">
+    <span>© cafitac · 2026년 10월 기준</span>
+    <a href="https://github.com/cafitac" target="_blank" rel="noopener">github.com/cafitac</a>
+  </footer>
+</body>
+</html>

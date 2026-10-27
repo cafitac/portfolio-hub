@@ -52,6 +52,7 @@
   const links = (p) =>
     [
       p.url && `<a class="btn primary" href="${esc(p.url)}" target="_blank" rel="noopener">${esc(host(p.url))} ${arrow}</a>`,
+      p.detail && `<a class="btn" href="${esc(p.detail.href)}">${esc(p.detail.label)}</a>`,
       ...(p.repos || []).map(
         (r) => `<a class="btn" href="${esc(r.url)}" target="_blank" rel="noopener">GitHub · ${esc(r.label)} ${arrow}</a>`,
       ),

@@ -5,6 +5,7 @@
 //   url     공개 사이트(없으면 null — 저장소 링크만 보인다)
 //   repos   공개 저장소 목록(비공개면 빈 배열)
 //   shot    shots/ 아래 화면 캡처. 없으면 record(실제 실행 기록)를 그린다
+//   detail  기술 노트 같은 상세 페이지(있으면 버튼으로)
 //   note    방문자가 알아야 할 한 줄(로그인 필요, 수치의 성격 등)
 window.PROJECTS = [
   {
@@ -54,6 +55,7 @@ window.PROJECTS = [
     ],
     stack: ["Kotlin", "Spring Boot", "PostgreSQL · pgvector", "Python", "Next.js", "Swift(iOS)", "Claude"],
     url: "https://interview.cafitac.com",
+    detail: { href: "interview-coach.html", label: "기술 자세히 보기" },
     repos: [],
     shot: "shots/interview.jpg?v=2",
     shotAlt: "과제 리뷰 면접 화면 — 질문, 깊이 2/5, 좋았던 점 · 보완할 점 · 이렇게 말하면 돼요",
